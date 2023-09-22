@@ -19,10 +19,16 @@ public class BlocksMixin {
 
 	@Redirect(
 			method = "<clinit>",
-			slice = @Slice(from = @At(value = "CONSTANT", args = "stringValue=reinforced_deepslate")),
-			at = @At(value = "INVOKE", target = "Lnet/minecraft/block/AbstractBlock$Settings;strength(FF)Lnet/minecraft/block/AbstractBlock$Settings;"))
+			slice = @Slice(
+					from = @At(
+							value = "CONSTANT",
+							args = "stringValue=reinforced_deepslate")),
+			at = @At(
+					value = "INVOKE",
+					target = "Lnet/minecraft/block/AbstractBlock$Settings;strength(FF)Lnet/minecraft/block/AbstractBlock$Settings;",
+					ordinal = 0))
 
-	private static AbstractBlock.Settings redirectRequiresTool(AbstractBlock.Settings settings, float hardness, float resistance) {
+	private static AbstractBlock.Settings rfdsm$redirectRequiresTool(AbstractBlock.Settings settings, float hardness, float resistance) {
 		return settings
 				.mapColor(MapColor.DEEPSLATE_GRAY)
 				.instrument(Instrument.BASEDRUM)
