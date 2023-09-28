@@ -1,10 +1,12 @@
 package net.xanthian.rfdeepslateminer.mixin;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.MapColor;
-import net.minecraft.block.enums.Instrument;
-import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.material.MapColor;
+
+import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -25,15 +27,16 @@ public class BlocksMixin {
 							args = "stringValue=reinforced_deepslate")),
 			at = @At(
 					value = "INVOKE",
-					target = "Lnet/minecraft/block/AbstractBlock$Settings;strength(FF)Lnet/minecraft/block/AbstractBlock$Settings;",
+					target = "Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;strength(FF)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;",
 					ordinal = 0))
 
-	private static AbstractBlock.Settings rfdsm$redirectRequiresTool(AbstractBlock.Settings settings, float hardness, float resistance) {
-		return settings
-				.mapColor(MapColor.DEEPSLATE_GRAY)
-				.instrument(Instrument.BASEDRUM)
-				.sounds(BlockSoundGroup.DEEPSLATE)
-				.requiresTool()
+	private static BlockBehaviour.Properties rfdsm$redirectRequiresTool(BlockBehaviour.Properties instance, float pDestroyTime, float pExplosionResistance) {
+		return instance
+				.mapColor(MapColor.DEEPSLATE)
+				.instrument(NoteBlockInstrument.BASEDRUM)
+				.sound(SoundType.DEEPSLATE)
+				.requiresCorrectToolForDrops()
 				.strength(50.0f, 1200.0f);
+
 	}
 }

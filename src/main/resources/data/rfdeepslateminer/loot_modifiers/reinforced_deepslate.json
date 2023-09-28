@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "type": "rfdeepslateminer:add_item",
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:blocks/reinforced_deepslate"
+    }
+  ],
+  "item": "minecraft:reinforced_deepslate"
+}
